@@ -1,5 +1,6 @@
 -- CreateTable
-CREATE TABLE "Category" (
+CREATE TABLE "Category"
+(
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
@@ -9,21 +10,26 @@ CREATE TABLE "Category" (
 );
 
 -- CreateTable
-CREATE TABLE "Product" (
+CREATE TABLE "Product"
+(
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "cost" INTEGER NOT NULL,
     "currency" TEXT NOT NULL,
     "soldCount" INTEGER NOT NULL,
-    "image" TEXT[],
     "categoryName" TEXT NOT NULL,
+    "image" TEXT
+    [],
 
-    CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Product_pkey" PRIMARY KEY
+    ("id")
 );
 
--- CreateIndex
-CREATE UNIQUE INDEX "Category_name_key" ON "Category"("name");
+    -- CreateIndex
+    CREATE UNIQUE INDEX "Category_name_key" ON "Category"("name");
 
--- AddForeignKey
-ALTER TABLE "Product" ADD CONSTRAINT "Product_categoryName_fkey" FOREIGN KEY ("categoryName") REFERENCES "Category"("name") ON DELETE RESTRICT ON UPDATE CASCADE;
+    -- AddForeignKey
+    ALTER TABLE "Product" ADD CONSTRAINT "Product_categoryName_fkey" FOREIGN KEY ("categoryName") REFERENCES "Category"("name")
+    ON DELETE RESTRICT ON
+    UPDATE CASCADE;

@@ -14,21 +14,21 @@ import { CreateCategoryDto } from './dto/create-category.dto';
 
 @Controller('category')
 export class CategoryController {
-  constructor(private categoryService: CategoryService) { }
+  constructor(private categoryService: CategoryService) {}
 
-  @Get()
+  @Post('create')
+  create(@Body() createCategoryDto: CreateCategoryDto) {
+    return this.categoryService.create(createCategoryDto);
+  }
+
+  @Get('cat')
   getAll() {
     return this.categoryService.getAll();
   }
 
   @Get('/:id')
-  findOneByID(@Param('id', ParseIntPipe) id: number) {
-    return this.categoryService.findOne(id);
-  }
-
-  @Post('create')
-  create(@Body() createCategoryDto: CreateCategoryDto) {
-    return this.categoryService.create(createCategoryDto);
+  findOneByID(@Param('id') name: string) {
+    return this.categoryService.findOne(name);
   }
 
   @Patch('update/:id')
@@ -36,11 +36,11 @@ export class CategoryController {
     @Param('id') id: string,
     @Body() updateCategoryDto: UpdateCategoryDto,
   ) {
-    return { je: 'je', id: id };
+    return this.categoryService.update(id, updateCategoryDto);
   }
 
   @Delete('delete/:id')
   delete(@Param('id') id: string) {
-    return { msg: 'borrado kon esito', id: id };
+    return this.categoryService.delete(id);
   }
 }
