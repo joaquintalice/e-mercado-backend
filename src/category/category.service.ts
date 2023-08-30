@@ -14,12 +14,44 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 export class CategoryService {
   private readonly logger = new Logger('Category provider');
 
-  constructor(private prismaService: PrismaService) {}
+  constructor(private prismaService: PrismaService) { }
+
+  async create(createCategoryDto: CreateCategoryDto) {
+
+    try {
+      const { name, description, imgSrc } = createCategoryDto;
+
+      const newCategory = await this.prismaService.category.create({
+        data: {
+          name,
+          description,
+          imgSrc,
+        },
+      });
+
+      return newCategory;
+    } catch (error) {
+      console.log(error);
+
+      switch (error instanceof Prisma.PrismaClientKnownRequestError) {
+        case error.code === 'P2002': {
+          throw new ConflictException('Unique constraint violation');
+        }
+        case error.code === 'P2003': {
+          throw new ConflictException('Must create category first');
+        }
+      }
+
+      throw new Error(`Unknown error`);
+    }
+  }
 
   async getAll() {
     const category = await this.prismaService.category.findMany({
       include: { Product: true },
     });
+
+    if (!category || category.length === 0) throw new NotFoundException(`No products found`);
 
     const catWithProductCount = category.map((category) => {
       const { Product, ...rest } = category;
@@ -32,19 +64,7 @@ export class CategoryService {
     return catWithProductCount;
   }
 
-  async create(createCategoryDto: CreateCategoryDto) {
-    const { name, description, imgSrc } = createCategoryDto;
 
-    const newCategory = await this.prismaService.category.create({
-      data: {
-        name,
-        description,
-        imgSrc,
-      },
-    });
-
-    return newCategory;
-  }
 
   async findOne(catId: string) {
     const category = await this.prismaService.category.findUnique({

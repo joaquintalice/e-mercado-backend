@@ -16,13 +16,22 @@ model Category {
 }
 
 model Product {
-  id           Int      @id @default(autoincrement())
-  name         String   @unique
-  description  String
-  cost         Int
-  currency     String
-  soldCount    Int
-  categoryName String
-  image        String[]
-  category     Category @relation(fields: [categoryName], references: [name])
+  id              Int               @id @default(autoincrement())
+  name            String            @unique
+  description     String
+  cost            Int
+  currency        String
+  soldCount       Int
+  categoryName    String
+  image           String[]
+  category        Category          @relation(fields: [categoryName], references: [name])
+  relatedProducts relatedProducts[]
+}
+
+model relatedProducts {
+  id       Int     @id @default(autoincrement())
+  prodId   Int
+  prodName String
+  image    String
+  Product  Product @relation(fields: [prodName], references: [name])
 }
