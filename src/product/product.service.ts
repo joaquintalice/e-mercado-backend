@@ -49,7 +49,7 @@ export class ProductService {
           throw new ConflictException('Unique constraint violation');
         }
         case error.code === 'P2003': {
-          throw new ConflictException('Must create create category first');
+          throw new ConflictException('Must create category first');
         }
       }
 
@@ -109,7 +109,7 @@ export class ProductService {
       // Fetch the main product with relatedProducts
       const product = await this.prismaService.product.findUnique({
         where: { id: id },
-        include: { relatedProducts: true },
+        include: { relatedProducts: true, commentId: true },
       });
 
       if (!product) {
