@@ -26,6 +26,7 @@ model Product {
   image           String[]
   category        Category          @relation(fields: [categoryName], references: [name])
   relatedProducts relatedProducts[]
+  commentId       productCommets[]
 }
 
 model relatedProducts {
@@ -34,4 +35,15 @@ model relatedProducts {
   prodName String
   image    String
   Product  Product @relation(fields: [prodName], references: [name])
+}
+
+model productCommets {
+  id          Int      @id @default(autoincrement())
+  productId   Int?
+  score       Int
+  description String
+  user        String
+  dateTime    DateTime @default(now())
+
+  Product Product? @relation(fields: [productId], references: [id])
 }

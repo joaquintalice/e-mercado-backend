@@ -9,6 +9,8 @@ export class RelatedProductsService {
 
   constructor(private prismaService: PrismaService) { }
 
+
+
   async create(createRelatedProductDto: CreateRelatedProductDto) {
     try {
       const { prodId, prodName, image } = createRelatedProductDto
@@ -40,8 +42,15 @@ export class RelatedProductsService {
   }
 
   async findAll() {
-    const relProd = await this.prismaService.relatedProducts.findMany();
-    return relProd;
+
+    try {
+      const relProd = await this.prismaService.relatedProducts.findMany();
+
+      return relProd;
+    } catch (error) {
+      console.log(error)
+    }
+
   }
 
   async findOne(id: number) {

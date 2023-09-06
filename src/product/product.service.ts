@@ -73,7 +73,7 @@ export class ProductService {
         const relatedProducts = await Promise.all(product.relatedProducts.map(async (relProd) => {
           const relatedProduct = await this.prismaService.product.findUnique({ where: { id: relProd.prodId } });
 
-          if (relatedProduct && relatedProduct.cost <= product.cost) {
+          if (relatedProduct) {
             const { id, name, image } = relatedProduct;
             return {
               id,
