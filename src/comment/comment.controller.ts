@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { CommentService } from './comment.service';
 import { CreateCommentDto } from './dto/create-comment-product.dto';
 import { UpdateCommentDto } from './dto/update-related-product.dto';
@@ -25,6 +25,11 @@ export class CommentController {
   @Patch('/:id')
   update(@Param('id', ParseIntPipe) id: number, @Body() updateCommentDto: UpdateCommentDto) {
     return this.commentService.update(id, updateCommentDto);
+  }
+
+  @Delete('/:id')
+  delete(@Param('id', ParseIntPipe) id: number) {
+    return this.commentService.delete(id);
   }
 
 }

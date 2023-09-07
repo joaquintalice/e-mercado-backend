@@ -81,5 +81,18 @@ export class CommentService {
         }
     }
 
+    async delete(id: number) {
+
+        try {
+            const comment = await this.getUnique(id);
+
+            return await this.prismaService.productCommets.delete({ where: { id: comment.id } })
+        } catch (error) {
+            console.log(error)
+            throw new NotFoundException(error.message)
+        }
+
+    }
+
 
 }
