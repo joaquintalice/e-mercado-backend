@@ -3,6 +3,7 @@ import { PrismaService } from 'src/db/prisma.service';
 import { CreateCommentDto } from './dto/create-comment-product.dto';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { Prisma } from '@prisma/client';
+import { UpdateCommentDto } from './dto/update-related-product.dto';
 
 @Injectable()
 export class CommentService {
@@ -53,6 +54,32 @@ export class CommentService {
         }
     }
 
+
+    async update(id: number, updateCommentDto: UpdateCommentDto) {
+
+        try {
+            const { user, productId, description, score } = updateCommentDto
+
+            const updatedComment = await this.prismaService.productCommets.update({
+                where: { id: id },
+                data: {
+                    user,
+                    productId,
+                    description,
+                    score
+                }
+            })
+
+            return updatedComment
+        } catch (error) {
+            switch (error instanceof Prisma.PrismaClientKnownRequestError) {
+                case error.code === 'P2003': {
+                    throw new ConflictException(`Must create product first`);
+                }
+            }
+            console.log(error)
+        }
+    }
 
 
 }
