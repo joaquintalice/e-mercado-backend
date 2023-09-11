@@ -1,37 +1,35 @@
-# compiled output
+compiled output
 /dist
 /node_modules
-.env
 
-# Logs
+Logs
 logs
-*.log
-npm-debug.log*
+.log
+npm-debug.log
 pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
-# OS
+OS
 .DS_Store
 
-# Tests
+Tests
 /coverage
 /.nyc_output
 
-# IDEs and editors
+IDEs and editors
 /.idea
 .project
 .classpath
 .c9/
 *.launch
 .settings/
-*.sublime-workspace
+.sublime-workspace
 
-# IDE - VSCode
-.vscode/*
+IDE - VSCode
+.vscode/
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-.vercel
