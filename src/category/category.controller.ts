@@ -14,7 +14,7 @@ import { CreateCategoryDto } from './dto/create-category.dto';
 
 @Controller('category')
 export class CategoryController {
-  constructor(private categoryService: CategoryService) {}
+  constructor(private categoryService: CategoryService) { }
 
   @Post('create')
   create(@Body() createCategoryDto: CreateCategoryDto) {
@@ -27,8 +27,8 @@ export class CategoryController {
   }
 
   @Get('/:id')
-  findOneByID(@Param('id') name: string) {
-    return this.categoryService.findOne(name);
+  findOneByID(@Param('id', ParseIntPipe) id: number) {
+    return this.categoryService.findOne(id);
   }
 
   @Patch('update/:id')

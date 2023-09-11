@@ -66,13 +66,13 @@ export class CategoryService {
 
 
 
-  async findOne(catId: string) {
+  async findOne(id: number) {
     const category = await this.prismaService.category.findUnique({
-      where: { name: catId },
+      where: { id: id },
       include: { Product: true },
     });
     if (!category)
-      throw new NotFoundException(`Category with id: ${catId} not found`);
+      throw new NotFoundException(`Category with id: ${id} not found`);
     const { description, imgSrc, ...rest } = category;
     return rest;
   }
