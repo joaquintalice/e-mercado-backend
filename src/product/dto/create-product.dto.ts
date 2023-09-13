@@ -26,7 +26,6 @@ export class CreateProductDto {
   currency: string;
 
   @IsNotEmpty()
-  @IsPositive()
   @IsNumber()
   soldCount: number;
 
